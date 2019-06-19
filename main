@@ -1,0 +1,166 @@
+#Classification of piping systems by piping category program. Version 0.1 2019 March 18
+#Based on Table 5.1-1 EN 13480-1:2012(E)
+#Python 3
+#Slawomir Sosfa
+#This program is for reference only. Author held no responsibilty for use of this software.
+
+#Welcome message.
+print("Pipe classification according to EN 13480-1. This is only for information. \nFor most up-to-date table read EN 13480 standard.")
+
+#Input from user.
+GL = input("Fluid type: gas = 1, liquid = 2: ")
+F = input("Fluid group: 1 or 2: ")
+PS = input("Pressure, bar: ")
+DN = input("Pipe nominal diameter: ")
+
+#Conversion.
+GLi = int(GL) #Fluid type converted to integer for further calculation.
+PSf = float(PS) #Pressure value converted to float.
+DNi = int(DN) #Diameter value converted to integer.
+Fi = int(F)  #Fluid code converted to integer.
+PSDN = PSf*DNi
+PSDNs=str(PSDN) #Pressure multiplied by diameter value converted to string.
+
+#Messages.
+textPSDN = "PS*DN - Pressure multiplied by Pipe nominal diameter = "
+printPSDN = textPSDN + PSDNs #Result is displayed everytime program outputs pipe category.
+fluidt = "Only gas or liquid."
+fluidgr = "Wrong fluid group."
+nocondition = "Given criteria values do not match EN 13480."
+endend = "Program end."
+gasf1 = "- gas, fluid group 1."
+gasf2 = "- gas, fluid group 2."
+liquidf1 = "- liquid, fluid group 1."
+liquidf2 = "- liquid, fluid group 2."
+explanation = ""
+
+#Warunki techniczne wykonania i odbioru
+category = " pipe category according EN 13480-1 table 5.1-1. This is for information only."
+category3 = "3" + category
+category2 = "2" + category
+category1 = "1" + category
+category0 = "0" + category
+nocategory = "No category EN 13480-1 tabela 5.1-1."
+UDT = "Pipe is under technical supervision by certified body."
+notUDT = "Pipe is not under technical supervision."
+
+#Conditions
+
+
+#Classification:
+if GLi!=1 and GLi!=2:
+ print(fluidt)
+
+if Fi!=1 and Fi!=2:
+ print(fluidgr)
+
+if GLi==1:
+ if Fi==1:
+  if (PSf>0.5 and DNi>350) or (PSf>0.5 and DNi>100 and PSDN>3500):
+   print(category3)
+   print(gasf1)
+   print(UDT)
+   print(printPSDN)
+  elif (PSf>0.5 and 350>=DNi>100 and PSDN<=3500) or (100>=DNi>25 and PSDN>1000) or (350>=DNi>25 and 3500>PSDN>1000):
+   print(category2)
+   print(gasf1)
+   print(UDT)
+   print(printPSDN)
+  elif PSf>0.5 and 100>=DNi>25 and 1000>=PSDN:
+   print(category1)
+   print(gasf1)
+   print(UDT)
+   print(printPSDN)
+  elif PSf>0.5 and DNi<=25:
+   print(category0)
+   print(gasf1)
+   print(notUDT)
+   print(printPSDN)
+  elif PSf<=0.5:
+   print(nocategory)
+   print(gasf1)
+   print(notUDT)
+   print(printPSDN)
+  else:
+   print(nocondition)
+ elif Fi==2:
+  if PSf>0.5 and DNi>250 and PSDN>5000:
+   print(category3)
+   print(gasf2)
+   print(UDT)
+   print(printPSDN)
+  elif (PSf>0.5 and DNi>250 and 5000>=PSDN>3500) or (250>=DNi>100 and PSDN>3500):
+   print(category2)
+   print(gasf2)
+   print(UDT)
+   print(printPSDN)
+  elif (PSf>0.5 and DNi>32 and 3500>=PSDN>1000) or (100>=DNi>32 and PSf>1000):
+   print(category1)
+   print(gasf2)
+   print(UDT)
+   print(printPSDN)
+  elif (PSf>0.5 and DNi<=32) or (PSf>0.5 and PSDN<=1000):
+   print(category0)
+   print(gasf2)
+   #print(UDT)
+   print(printPSDN)
+  elif PSf<=0.5:
+   print(nocategory)
+   print(gasf2)
+   print(notUDT)
+   print(printPSDN)
+  else:
+   print(nocondition)
+elif GLi==2:
+ if Fi==1:
+  if PSf>500 and DNi>25:
+   print(category3)
+   print(liquidf1)
+   print(UDT)
+   print(printPSDN)
+  elif 500>=PSf>10 and DNi>25 and PSDN>2000:
+   print(category2)
+   print(liquidf1)
+   print(UDT)
+   print(printPSDN)
+  elif 10>=PSf>0.5 and PSDN>2000:
+   print(category1)
+   print(liquidf1)
+   print(UDT)
+   print(printPSDN)
+  elif (PSf>0.5 and DNi<=25) or (PSf>0.5 and PSDN<=2000):
+   print(category0)
+   print(liquidf1)
+   print(notUDT)
+   print(printPSDN)
+  elif 0.5<=PSf:
+   print(nocategory)
+   print(liquidf1)
+   print(notUDT)
+   print(printPSDN)
+  else:
+   print(nocondition)
+ elif Fi==2:
+  if PSf>500 and DNi>200:
+   print(category2)
+   print(liquidf2)
+   print(UDT)
+   print(printPSDN)
+  elif 500>=PSf>10 and DNi>200 and PSDN>5000: 
+   print(category1)
+   print(liquidf2)
+   print(UDT)
+   print(printPSDN)
+  elif (10>=PSf>0.5) or (PSf>0.5 and DNi>=200) or (PSf>0.5 and PSDN<=5000):
+   print(category0)
+   print(liquidf2)
+   #print(notUDT)
+   print(printPSDN)
+  elif 0.5<=PSf:
+   print(nocategory)
+   print(liquidf2)
+   print(notUDT)
+   print(printPSDN)
+  else:
+   print(nocondition)
+print(endend)
